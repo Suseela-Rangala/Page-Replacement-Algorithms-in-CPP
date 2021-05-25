@@ -1,0 +1,72 @@
+//lru
+#include<iostream>
+using namespace std;
+int check(int *b,int f,int v)
+{
+   int i,t=-1;
+   for(i=0;i<f;i++)
+   {
+      if(b[i]==v)
+      {
+         t=i;
+         break;
+      }
+   }
+ return t;
+}
+
+void swap(int i,int *b,int f,int v)
+{
+  int j;
+  for(j=i;j<f-1;j++)
+  {
+    b[j]=b[j+1];
+  }
+  b[j]=v;
+}
+int main()
+{
+  int t,i,j,k,p,b[10],a[50],f,hit=0,fault=0;
+  cout<<"No.of frames=";
+  cin>>f;
+  cout<<"No.of processes:";
+  cin>>p;
+  cout<<"Enter processes:\n"; 
+  for(i=0;i<p;i++)
+  {
+    cin>>a[i];
+  }
+   
+  fault=f;
+  cout<<"-----------------------------"<<endl;
+  for(i=0;i<f;i++) {   b[i]=a[i];   }
+  for(i=0;i<f;i++) 
+  {  
+     for(j=0;j<=i;j++) 
+       {
+           cout<<b[j]<<" ";
+       }
+     cout<<endl;
+  }
+  for(i=f;i<p;i++) 
+  { 
+      t=check(b,f,a[i]);
+      if(t!=-1)
+      {
+        swap(t,b,f,a[i]);
+        for(j=0;j<f;j++) {  cout<<b[j]<<" ";  }
+        cout<<endl;
+        hit++;  
+      }
+     else
+     {
+        swap(0,b,f,a[i]);
+        for(k=0;k<f;k++) {  cout<<b[k]<<" ";  }
+        cout<<endl;
+        fault++;
+      }  
+   }
+   cout<<"No.of hits:"<<hit;
+   cout<<"\nNo.of page faults:"<<fault;
+   return 0;
+}
